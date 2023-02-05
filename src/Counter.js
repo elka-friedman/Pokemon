@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, {useState , useEffect} from "react";
 
 const Counter = () => {
     const [count, setCount] = useState(0)
+    useEffect(() => {
+        document.title= `you clicked ${count} times`
+    })
     console.log('Count on state', count);
     return (
         <div> 
-            <p>You clicked {count} time </p>
+            <p>You clicked {count} times </p>
             <button onClick={() => setCount(count +1)}>
                 Click to increment counter
             </button>
