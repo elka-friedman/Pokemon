@@ -1,4 +1,6 @@
 import axios from "axios";
+import React, {useState} from "react";
+
 
 const Pokemon = () => {
   //     try{
@@ -10,6 +12,8 @@ const Pokemon = () => {
   // } catch (err) {
   //     console.log(err)
   // }
+
+  const [pokemon, setPokemon] = useState([]);
 
   const getPokeman = async () => {
     try {
