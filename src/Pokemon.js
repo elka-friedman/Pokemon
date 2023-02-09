@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 
 const Pokemon = () => {
@@ -13,23 +13,37 @@ const Pokemon = () => {
   //     console.log(err)
   // }
 
-  const [pokemon, setPokemon] = useState([]);
-
-  const getPokeman = async () => {
+  const [pokemon, setPokemon] = useState();
+  
+  const getPokemon = async () => {
     try {
       const { data } = await axios.get("https://pokeapi.co/api/v2/pokemon");
-      console.log(data);
+      return data.results;
     } catch (err) {
       console.log(err);
     }
   };
 
+useEffect(() => {
+  (async () => {
+    const pokemonData = await getPokemon();
+    setPokemon((pokemon) => [...pokemonData])
+  })();
+  return () => {};
+  }, [])
+
+  console.log('Pokemon on state', pokemon);
   return (
     <>
       {/* {pokemon.response.map((pokemon) => {
         return <p>{pokemon.name}</p>;
       })} */}
-      <button onClick={getPokeman}>Pokemon</button>
+      <button onClick={getPokemon}>Pokemon</button>
+      <div>
+        {pokemon.map((pokemon, index) => {
+          return <p key={index}>pokemon's name: {pokemon.name}</p>
+        })}
+      </div>
     </>
   );
 };
